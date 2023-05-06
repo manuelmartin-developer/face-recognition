@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Confetti from "react-confetti";
+import FaceDetection from "./components/FaceDetection";
+import { useState } from "react";
 
 function App() {
+  // ComponentState
+  const [haveFun, setHaveFun] = useState(false);
+  const [party, setParty] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!haveFun && (
+        <div className="notFun">
+          <img src="logo.png" alt="logo" />
+          <div className="buttons">
+            <button onClick={() => setHaveFun(!haveFun)} className="haveFun">
+              {!haveFun ? "Comenzar la diversión" : "Vuelve a tu vida aburrida"}
+            </button>
+            <button onClick={() => setParty(!party)} className="fun-btn">
+              {!party ? "Party" : "No party"}
+            </button>
+          </div>
+          <Confetti
+            width={window.innerWidth}
+            height={window.innerHeight}
+            recycle={party ? true : false}
+            numberOfPieces={party ? 500 : 0}
+          />
+        </div>
+      )}
+      {haveFun && <FaceDetection haveFun={haveFun} setHaveFun={setHaveFun} />}
     </div>
   );
 }
